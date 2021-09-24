@@ -208,25 +208,25 @@ go
 --FUNZIONI
 --tabella listino pizze in ordine alfabetico
 create function listinoPizze()
-returns table
-as begin
+returns Table
+as 
+	return
+	(select NomePizza, Prezzo from Pizza)
+	
 
-	select NomePizza, Prezzo from Pizza
-	order by NomePizza
-end
 
 -- tabella listino pizze contenenti un ingrediente
 create function listinoPizzeUnIngrediente(@NomeI varchar(30))
 returns table
-as begin
-	
-	select CodPizza, NomePizza, Prezzo from Pizza
+as 
+	return
+	(select CodPizza, NomePizza, Prezzo from Pizza
 	join PizzaIngrediente on CodPizza = IDPizza
 	join Ingrediente on CodIngrediente = IDIngrediente
 	where NomeI = NomeIngrediente
 	order by CodPizza, NomePizza, Prezzo
-	having count(IDIngrediente) = 1
-end
+	having count(IDIngrediente) = 1)
+
 
 
 --VIEW
