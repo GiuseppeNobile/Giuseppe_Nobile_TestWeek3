@@ -133,7 +133,7 @@ create procedure InserisciPizza
 @PrezzoP decimal(4,2)
 as
 insert into Pizza(NomePizza,Prezzo) values(@NomeP, @PrezzoP)
-go
+go;
 
 --execute InserisciPizza @NomeP = 'Pizza Nuova', @PrezzoP = 5.44;
 
@@ -155,7 +155,7 @@ as
 	where @NomeI = NomeIngrediente
 	
 	insert into PizzaIngrediente(IDPizza,IDIngrediente) values(@IDP, @IDI)
-go
+go;
 
 --execute AssegnaIngrediente @NomeP = 'Pizza Nuova', @NomeI = 'mozzarella';
 
@@ -166,7 +166,7 @@ create procedure AggiornamentoPrezzoPizza
 @NewPrezzo decimal(4,2)
 as
 update Pizza set Prezzo = @NewPrezzo where NomePizza = @NomeP
-go
+go;
 
 --execute AggiornamentoPrezzoPizza @NomeP = 'Pizza Nuova', @NewPrezzo = 4.55;
 
@@ -190,7 +190,7 @@ as
 	where @NomeI = NomeIngrediente
 
 	delete from PizzaIngrediente where @IDP = IDPizza and @IDI = IDIngrediente
-go
+go;
 
 --incremento del 10% del prezzo delle pizze contenenti un ingrediente
 create procedure IncrementoPrezzoPizza
@@ -203,7 +203,7 @@ as
 
 	update Pizza set Prezzo = (Prezzo *(10/100)) 
 	
-go
+go;
 
 --FUNZIONI
 --tabella listino pizze in ordine alfabetico
@@ -211,7 +211,7 @@ create function listinoPizze()
 returns Table
 as 
 	return
-	(select NomePizza, Prezzo from Pizza)
+	(select NomePizza, Prezzo from Pizza);
 	
 
 
@@ -223,7 +223,7 @@ as
 	(select CodPizza, NomePizza, Prezzo from Pizza
 	join PizzaIngrediente on CodPizza = IDPizza
 	join Ingrediente on CodIngrediente = IDIngrediente
-	where @NomeI = NomeIngrediente)
+	where @NomeI = NomeIngrediente);
 
 -- tabella listino pizze che non contengono un certo ingrediente
 create function listinoPizzeSenzaIngrediente(@NomeI varchar(30))
@@ -233,7 +233,9 @@ as
 	(select CodPizza, NomePizza, Prezzo from Pizza
 	join PizzaIngrediente on CodPizza = IDPizza
 	join Ingrediente on CodIngrediente = IDIngrediente
-	where @NomeI <> NomeIngrediente)
+	where @NomeI <> NomeIngrediente);
+
+
 
 --VIEW
 create view MenuPizzeria(NomePizza, Prezzo, Ingredienti)
