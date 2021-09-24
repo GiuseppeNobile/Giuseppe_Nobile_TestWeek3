@@ -225,7 +225,15 @@ as
 	join Ingrediente on CodIngrediente = IDIngrediente
 	where @NomeI = NomeIngrediente)
 
-
+-- tabella listino pizze che non contengono un certo ingrediente
+create function listinoPizzeSenzaIngrediente(@NomeI varchar(30))
+returns table
+as 
+	return
+	(select CodPizza, NomePizza, Prezzo from Pizza
+	join PizzaIngrediente on CodPizza = IDPizza
+	join Ingrediente on CodIngrediente = IDIngrediente
+	where @NomeI <> NomeIngrediente)
 
 --VIEW
 create view MenuPizzeria(NomePizza, Prezzo, Ingredienti)
