@@ -235,7 +235,41 @@ as
 	join Ingrediente on CodIngrediente = IDIngrediente
 	where @NomeI <> NomeIngrediente);
 
+-- calcolo numero pizze contenenti un ingrediente
+create function NumeroPizzeConUnIngrediente(@NomeI varchar(30))
+returns int
+as
+begin 
+	return
+	(select count(CodPizza) from Pizza
+	join PizzaIngrediente on CodPizza = IDPizza
+	join Ingrediente on CodIngrediente = IDIngrediente
+	where NomeIngrediente = @NomeI)
+end
 
+--calcolo numero pizze che non contengono un ingrediente
+create function NumeroPizzeSenzaUnIngrediente(@CodI int)
+returns int
+as
+begin 
+	return
+	(select count(CodPizza) from Pizza
+	join PizzaIngrediente on CodPizza = IDPizza
+	join Ingrediente on CodIngrediente = IDIngrediente
+	where CodIngrediente <> @CodI)
+end
+
+--calcolo numero ingredienti contenuti in una pizza
+create function NumeroIngredientiInUnaPizza(@NomeP varchar(20))
+returns int
+as 
+begin
+	return
+	(select Count(CodIngrediente) as NumIngredienti from Ingrediente
+	join PizzaIngrediente on IDIngrediente = CodIngrediente
+	join Pizza on IDPizza = CodPizza
+	where @NomeP = NomePizza and CodIngrediente <> IDIngrediente)
+end
 
 --VIEW
 create view MenuPizzeria(NomePizza, Prezzo, Ingredienti)
