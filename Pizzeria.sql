@@ -223,9 +223,7 @@ as
 	(select CodPizza, NomePizza, Prezzo from Pizza
 	join PizzaIngrediente on CodPizza = IDPizza
 	join Ingrediente on CodIngrediente = IDIngrediente
-	where NomeI = NomeIngrediente
-	order by CodPizza, NomePizza, Prezzo
-	having count(IDIngrediente) = 1)
+	where @NomeI = NomeIngrediente)
 
 
 
